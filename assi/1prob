@@ -1,0 +1,59 @@
+#include <stdio.h>
+#include <string.h>
+
+void sortBooks(char books[][100], int n) {
+    char temp[100];
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (strcmp(books[i], books[j]) > 0) {
+                strcpy(temp, books[i]);
+                strcpy(books[i], books[j]);
+                strcpy(books[j], temp);
+            }
+        }
+    }
+}
+
+int searchBook(char books[][100], int n, char query[]) {
+    for (int i = 0; i < n; i++) {
+        if (strcmp(books[i], query) == 0) {
+            return 1;  // Return 1 if found
+        }
+    }
+    return 0;  // Return 0 if not found
+}
+
+int main() {
+    int n;
+    printf("Enter number of books: ");
+    scanf("%d", &n);
+    getchar();  // Consume the newline character left by scanf
+
+    char books[n][100];
+    printf("Enter book titles:\n");
+    for (int i = 0; i < n; i++) {
+        printf("%d. ", i + 1);
+        fgets(books[i], sizeof(books[i]), stdin);
+        books[i][strcspn(books[i], "\n")] = 0;  // Remove newline character
+    }
+
+    sortBooks(books, n);
+
+    printf("\nSorted List:\n");
+    for (int i = 0; i < n; i++) {
+        printf("%d. %s\n", i + 1, books[i]);
+    }
+
+    char query[100];
+    printf("\nEnter book title to search: ");
+    fgets(query, sizeof(query), stdin);
+    query[strcspn(query, "\n")] = 0;  // Remove newline character
+
+    if (searchBook(books, n, query)) {
+        printf("Book found in the library.\n");
+    } else {
+        printf("Book not found in the library.\n");
+    }
+
+    return 0;
+}
