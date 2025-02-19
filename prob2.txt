@@ -1,0 +1,38 @@
+// Online C compiler to run C program online
+#include <stdio.h>
+struct student{
+    char name[255];
+    int marks;
+};
+
+typedef struct student stu;
+void readstudents(stu* students,int lenght)
+{
+    for(int i=0;i<lenght;i++)
+    {
+        printf("student %d name :",i+1);
+        scanf("%s",students[i].name);
+        printf("student marks:");
+        scanf("%d",&students[i].marks);
+    }
+}
+
+void printstudents(stu *students,int length)
+{
+    
+    printf("student record: \n");
+    for(int i=0;i<length;i++)
+    {
+        printf("%s - %d \n",students[i].name,students[i].marks);
+    }
+}
+int main() {
+    
+    stu students[1000];
+    int studentscount;
+    printf("enther numberof student : \n");
+    scanf("%d",&studentscount);
+    readstudents(students,studentscount);
+    printstudents(students,studentscount);
+    
+}
