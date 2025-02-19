@@ -1,0 +1,15 @@
+def sort_patients(patients):
+    return sorted(patients, key=lambda x: x[1], reverse=True), sorted(patients, key=lambda x: x[1], reverse=True)[:3]
+
+n = int(input("Enter number of patients: "))
+patients = [(input(f"Enter name of patient {i + 1}: "), int(input(f"Enter emergency level (1-5) for patient {i + 1}: "))) for i in range(n)]
+
+sorted_patients, top_3_critical = sort_patients(patients)
+
+print("\nSorted by Emergency Level:")
+for i, (name, level) in enumerate(sorted_patients):
+    print(f"{i + 1}. {name} - Level {level}")
+
+print("\nTop 3 Critical Patients:")
+for i, (name, level) in enumerate(top_3_critical):
+    print(f"{i + 1}. {name}")
