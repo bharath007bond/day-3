@@ -1,0 +1,25 @@
+// Online C compiler to run C program online
+#include <stdio.h>
+void countvotes(int votes[],int n,int candidatesvotes[])
+{
+    for(int i=0;i<n;i++)
+    {
+        candidatesvotes[votes[i]-1]++;
+    }
+}
+int findwinner(int candidatesvotes[])
+{
+  int max_index=0;
+  for(int i=1;i<5;i++)
+  {
+      if(candidatevotes[i]>candidatevotes[max_index])
+      max_index=i;
+  }
+  return max_index+1;
+}
+int main() {
+    // Write C code here
+    printf("Try programiz.pro");
+
+    return 0;
+}
