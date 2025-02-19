@@ -1,15 +1,50 @@
-def sort_patients(patients):
-    return sorted(patients, key=lambda x: x[1], reverse=True), sorted(patients, key=lambda x: x[1], reverse=True)[:3]
+#include <stdio.h>
+#include <string.h>
 
-n = int(input("Enter number of patients: "))
-patients = [(input(f"Enter name of patient {i + 1}: "), int(input(f"Enter emergency level (1-5) for patient {i + 1}: "))) for i in range(n)]
+typedef struct {
+    char name[50];
+    int level;
+} Patient;
 
-sorted_patients, top_3_critical = sort_patients(patients)
+void sort_patients(Patient patients[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (patients[j].level < patients[j + 1].level) {
+                Patient temp = patients[j];
+                patients[j] = patients[j + 1];
+                patients[j + 1] = temp;
+            }
+        }
+    }
+}
 
-print("\nSorted by Emergency Level:")
-for i, (name, level) in enumerate(sorted_patients):
-    print(f"{i + 1}. {name} - Level {level}")
+int main() {
+    int n;
+    printf("Enter number of patients: ");
+    scanf("%d", &n);
+    getchar(); // Consume the newline character left by scanf
 
-print("\nTop 3 Critical Patients:")
-for i, (name, level) in enumerate(top_3_critical):
-    print(f"{i + 1}. {name}")
+    Patient patients[n];
+    for (int i = 0; i < n; i++) {
+        printf("Enter name of patient %d: ", i + 1);
+        fgets(patients[i].name, sizeof(patients[i].name), stdin);
+        patients[i].name[strcspn(patients[i].name, "\n")] = '\0'; // Remove newline character
+        printf("Enter emergency level (1-5) for patient %d: ", i + 1);
+        scanf("%d", &patients[i].level);
+        getchar(); // Consume the newline character left by scanf
+    }
+
+    sort_patients(patients, n);
+
+    printf("\nSorted by Emergency Level:\n");
+    for (int i = 0; i < n; i++) {
+        printf("%d. %s - Level %d\n", i + 1, patients[i].name, patients[i].level);
+    }
+
+    printf("\nTop 3 Critical Patients:\n");
+    for (int i = 0; i < 3 && i < n; i++) {
+        printf("%d. %s\n", i + 1, patients[i].name);
+    }
+
+    return 0;
+}
